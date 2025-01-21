@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Memory of Grandpa</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 150vh;
+            width: 110;
+            background-image: url('Together/IMG_0032.JPG');
+            background-size: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .icon-container {
+            margin-top: 350px;
+            display: flex;
+            gap: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .icon {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            background-color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            transition: transform 0.2s;
+        }
+
+        .icon:hover {
+            transform: scale(1.1);
+        }
+
+        #content {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 1200px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            display: none;
+        }
+
+        #gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #mainPhoto {
+            width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+        }
+
+        #thumbnails {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+        }
+
+        .thumbnail {
+            height: 100px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .thumbnail:hover {
+            border-color: #007bff;
+        }
+
+        #video-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        video {
+            max-width: 100%;
+        }
+
+        .download-btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #words {
+            color: white;
+            -webkit-text-stroke: 1px black;
+        }
+    </style>
+</head>
+<body>
+    <div class="icon-container">
+        <div class="icon" onclick="showGallery()"><image src=/image-gallery.png width="80" height="80"></image></div>
+        <div class="icon" onclick="showVideo()"><image src=/presentation.png width="80" height="80"></image></div>
+    </div>
+
+    <h1 id="words">In memory of a <i>Good Guy</i></h1>
+
+    <div id="content">
+        <div id="gallery" style="display: none;">
+            <img id="mainPhoto" src="" alt="Main photo">
+            <div id="thumbnails"></div>
+        </div>
+
+        <div id="video-container" style="display: none;">
+            <video controls>
+                <source src="Grandpa.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <a href="Grandpa.mp4" download class="download-btn">Download Video</a>
+        </div>
+    </div>
+
+    <script>
+        const photoList = [
+            'Together/5-31-2007-18.JPG',
+            'Together/341_3041_LR.JPG',
+            'Together/2004 santa - jack and grandpa.JPG',
+            'Together/5317931755_8243275902_b[1].JPG',
+            'Together/61204636871__707C82B5-510B-4726-ADCB-A44FE2960D27.JPG',
+            'Together/158352590085806049.JPG',
+            'Together/6877294525277757105.JPG',
+            'Together/IMG_0026.JPG',
+            'Together/IMG_0032.JPG',
+            'Together/IMG_0034.JPG',
+            'Together/IMG_0081.JPG',
+            'Together/IMG_0096.JPG',
+            'Together/IMG_0128 2.JPG',
+            'Together/IMG_0128.JPG',
+            'Together/IMG_0145.JPG',
+            'Together/IMG_0153.JPG',
+            'Together/IMG_0160.JPG',
+            'Together/IMG_0162 2.jpg',
+            'Together/IMG_0162.JPG',
+            'Together/IMG_0164.JPG',
+            'Together/IMG_0167 2.JPG',
+            'Together/IMG_0167.JPG',
+            'Together/IMG_0168.JPG',
+            'Together/IMG_0180.JPG',
+            'Together/IMG_0184.JPG',
+            'Together/IMG_0222.JPG',
+            'Together/IMG_0255.JPG',
+            'Together/IMG_0273.JPG',
+            'Together/IMG_0277.JPG',
+            'Together/IMG_0278.JPG',
+            'Together/IMG_0294.JPG',
+            'Together/IMG_0309.JPG',
+            'Together/IMG_0318.JPG',
+            'Together/IMG_0325.JPG',
+            'Together/IMG_0337.JPG',
+            'Together/IMG_0352.JPG',
+            'Together/IMG_0353.JPG',
+            'Together/IMG_0354.JPG',
+            'Together/IMG_0355.JPG',
+            'Together/IMG_0356.jpg',
+            'Together/IMG_0361.JPG',
+            'Together/IMG_0362.JPG',
+            'Together/IMG_0366.JPG',
+            'Together/IMG_0367.JPG',
+            'Together/IMG_0369.JPG',
+            'Together/IMG_0372.JPG',
+            'Together/IMG_0373.JPG',
+            'Together/IMG_0374.JPG',
+            'Together/IMG_0376.JPG',
+            'Together/IMG_0377.JPG',
+            'Together/IMG_0378.JPG',
+            'Together/IMG_0379.JPG',
+            'Together/IMG_0380.JPG',
+            'Together/IMG_0381.JPG',
+            'Together/IMG_0382.JPG',
+            'Together/IMG_0383.JPG',
+            'Together/IMG_0385.JPG',
+            'Together/IMG_0422.JPG',
+            'Together/IMG_0439.JPG',
+            'Together/IMG_0459.JPG',
+            'Together/IMG_0514.JPG',
+            'Together/IMG_0521.JPG',
+            'Together/IMG_0558.JPG',
+            'Together/IMG_0565.JPG',
+            'Together/IMG_0571.JPG',
+            'Together/IMG_0576.JPG',
+            'Together/IMG_0583.JPG',
+            'Together/IMG_0615.JPG',
+            'Together/IMG_1016.JPG',
+            'Together/IMG_1018.JPG',
+            'Together/IMG_1020.JPG',
+            'Together/IMG_1021.JPG',
+            'Together/IMG_1062.JPG',
+            'Together/IMG_1063.JPG',
+            'Together/IMG_1075.JPG',
+            'Together/IMG_1077.JPG',
+            'Together/IMG_1638.JPG',
+            'Together/IMG_1872.JPG',
+            'Together/IMG_1895.JPG',
+            'Together/IMG_2036.JPG',
+            'Together/IMG_2176.JPG',
+            'Together/IMG_2416.JPG',
+            'Together/IMG_2502.JPG',
+            'Together/IMG_2548.JPG',
+            'Together/IMG_2576.JPG',
+            'Together/IMG_2637.JPG',
+            'Together/IMG_2660.JPG',
+            'Together/IMG_2744.JPG',
+            'Together/IMG_2890.JPG',
+            'Together/IMG_3023.JPG',
+            'Together/IMG_3218.JPG',
+            'Together/IMG_3735.JPG',
+            'Together/IMG_3819.JPG',
+            'Together/IMG_3821.JPG',
+            'Together/IMG_3962.JPG',
+            'Together/IMG_3964.JPG',
+            'Together/IMG_3969.JPG',
+            'Together/IMG_4041.JPG',
+            'Together/IMG_4239 2.JPG',
+            'Together/IMG_4239.JPG',
+            'Together/IMG_4240.JPG',
+            'Together/IMG_4377.JPG',
+            'Together/IMG_4378.JPG',
+            'Together/IMG_4379.JPG',
+            'Together/IMG_4684.JPG',
+            'Together/IMG_5148.JPG',
+            'Together/IMG_5987.JPG',
+            'Together/IMG_6091.JPG',
+            'Together/IMG_6118.JPG',
+            'Together/IMG_6144.JPG',
+            'Together/IMG_6147.JPG',
+            'Together/IMG_7322.JPG',
+            'Together/IMG_7323.JPG',
+            'Together/IMG_7428.JPG',
+            'Together/IMG_7441.JPG',
+            'Together/IMG_7443.JPG',
+            'Together/IMG_7760.JPG',
+            'Together/IMG_7765.JPG',
+            'Together/IMG_8448.JPG',
+            'Together/IMG_9058.JPG',
+            'Together/IMG_9191.JPG',
+            'Together/IMG_9892.JPG',
+            'Together/IMG_9956.JPG',
+            'Together/IMG_9962.JPG',
+            'Together/P3310101.jpg',
+            'Together/P5250007.JPG',
+            'Together/P7261012.jpg',
+            'Together/P7261013.JPG',
+            'Together/P7261017.JPG',
+            'Together/P8171908.JPG',
+            'Together/P8171923.JPG',
+            'Together/P8181929.JPG',
+            'Together/P8181938 2.JPG',
+            'Together/P8181938.JPG',
+            'Together/P8211955.JPG',
+            'Together/PA291311.JPG',
+            'Together/PC140049.JPG',
+            'Together/PC311463.JPG'
+        ];
+
+        let currentPhotoIndex = 0;
+
+        function updateMainPhoto(index) {
+            currentPhotoIndex = index;
+            const mainPhoto = document.getElementById('mainPhoto');
+            mainPhoto.src = photoList[currentPhotoIndex];
+            
+            // Update thumbnail highlighting
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach((thumb, idx) => {
+                thumb.style.borderColor = idx === currentPhotoIndex ? '#007bff' : 'transparent';
+            });
+        }
+
+        function handleKeyNavigation(e) {
+            if (!document.getElementById('gallery').style.display || document.getElementById('gallery').style.display === 'none') {
+                return;
+            }
+
+            if (e.key === 'ArrowLeft') {
+                const newIndex = (currentPhotoIndex - 1 + photoList.length) % photoList.length;
+                updateMainPhoto(newIndex);
+            } else if (e.key === 'ArrowRight') {
+                const newIndex = (currentPhotoIndex + 1) % photoList.length;
+                updateMainPhoto(newIndex);
+            }
+        }
+
+        function showGallery() {
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('gallery').style.display = 'flex';
+            document.getElementById('video-container').style.display = 'none';
+            
+            // Clear existing thumbnails
+            const thumbnailsContainer = document.getElementById('thumbnails');
+            thumbnailsContainer.innerHTML = '';
+            
+            // Reset and set main photo to first image
+            currentPhotoIndex = 0;
+            updateMainPhoto(currentPhotoIndex);
+            
+            // Create thumbnails
+            photoList.forEach((photo, index) => {
+                const img = document.createElement('img');
+                img.src = photo;
+                img.className = 'thumbnail';
+                img.onclick = () => updateMainPhoto(index);
+                thumbnailsContainer.appendChild(img);
+            });
+        }
+
+        // Add keyboard event listener
+        document.addEventListener('keydown', handleKeyNavigation);
+
+        function showVideo() {
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('gallery').style.display = 'none';
+            document.getElementById('video-container').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
